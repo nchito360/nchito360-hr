@@ -1,10 +1,19 @@
 @extends('layouts.auth')
 
 @section('content')
-<div class="container-xl">
+<div class="container-xl w-50">
   <div class="authentication-wrapper authentication-basic container-p-y">
     <div class="authentication-inner">
       <div class="card">
+        <div class="card-body">
+          <div class="app-brand justify-content-center">
+            
+            <a href="#" class="app-brand-link gap-2">
+      <img src="{{ asset('hr-app/assets/img/logos/nchito360-logo (4).png') }}" alt="Logo" style="height: 20rem;">
+     
+    </a>
+   
+          </div>
         <div class="card-body text-center">
           <h4 class="mb-2">Verify Your Email Address</h4>
           <p class="mb-4">
