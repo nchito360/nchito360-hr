@@ -8,7 +8,6 @@
   <a href="https://nchito360.site" target="_blank">🌐 Visit the Official Website</a>
 </p>
 
-<!-- Signature -->
       <table cellpadding="0" cellspacing="0" style="font-size: 14px; color: #6c757d; font-family: Arial, sans-serif; margin-top: 20px;">
         <tr>
           <td rowspan="5" style="padding-right: 15px; vertical-align: top;">
