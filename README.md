@@ -7,29 +7,6 @@
 <p align="center">
   <a href="https://nchito360.site" target="_blank">🌐 Visit the Official Website</a>
 </p>
-
-      <table cellpadding="0" cellspacing="0" style="font-size: 14px; color: #6c757d; font-family: Arial, sans-serif; margin-top: 20px;">
-        <tr>
-          <td rowspan="5" style="padding-right: 15px; vertical-align: top;">
-            <img src="https://nchito360.site/assets/img/logos/nchito360-logo.png" alt="Nchito360° Logo" width="60" style="display: block;" />
-          </td>
-          <td><strong>Support Team</strong></td>
-        </tr>
-        <tr>
-          <td>Nchito360° – Revolutionizing Human Resource Management</td>
-        </tr>
-        <tr>
-          <td>🌐 <a href="https://nchito360.site" style="color: #0d6efd; text-decoration: none;">nchito360.site</a></td>
-        </tr>
-        <tr>
-          <td>📧 <a href="mailto:support@nchito360.site" style="color: #0d6efd; text-decoration: none;">support@nchito360.site</a></td>
-        </tr>
-        <tr>
-          <td>📍 93-Q King’s Avenue, London, NW1 9SU, United Kingdom</td>
-        </tr>
-      </table>
-
-
 ---
 
 ## 🚀 About the Project
