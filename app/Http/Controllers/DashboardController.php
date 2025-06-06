@@ -59,9 +59,6 @@ public function manageCompany()
     return view('employee.company.manage', compact('company', 'joinRequests'));
 }
 
-
-
-
 public function showRegisterCompanyForm()
 {
     return view('employee.company.register');

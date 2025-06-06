@@ -45,6 +45,7 @@ class CustomResetPassword extends Notification
         ], false));
 
         return (new MailMessage)
+            ->subject('Reset Your Password – Nchito360°')
             ->view('emails.auth.reset-password', [
                 'url' => $url,
                 'user' => $notifiable,

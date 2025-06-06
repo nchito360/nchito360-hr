@@ -25,7 +25,7 @@
       <li class="nav-item navbar-dropdown dropdown-user dropdown">
         <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
           <div class="avatar avatar-online">
-            <img src="{{ auth()->user()->profile_picture ? asset('uploads/profiles/' . auth()->user()->profile_picture) : asset('default-profile.png') }}" 
+            <img src="{{ auth()->user()->profile_picture ? asset('uploads/profiles/' . auth()->user()->profile_picture) : asset('hr-app\assets\img\avatars\default-profile.png') }}" 
             class="rounded-circle me-3 object-fit-cover"
                 style="object-fit: cover;"
             class="w-px-40 h-auto rounded-circle" />
@@ -37,7 +37,7 @@
               <div class="d-flex">
                 <div class="flex-shrink-0 me-3">
                   <div class="avatar avatar-online">
-                    <img src="{{ auth()->user()->profile_picture ? asset('uploads/profiles/' . auth()->user()->profile_picture) : asset('default-profile.png') }}"  
+                    <img src="{{ auth()->user()->profile_picture ? asset('uploads/profiles/' . auth()->user()->profile_picture) : asset('hr-app\assets\img\avatars\default-profile.png') }}"  
                     class="rounded-circle me-3 object-fit-cover"
                 style="object-fit: cover;"
                     class="w-px-40 h-auto rounded-circle" />

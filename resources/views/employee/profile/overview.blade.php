@@ -10,7 +10,7 @@
     <!-- Profile Info Card -->
     <div class="card mb-4">
         <div class="card-body d-flex align-items-center">
-            <img src="{{ $user->profile_picture ? asset('uploads/profiles/' . $user->profile_picture) : asset('default-profile.png') }}"
+            <img src="{{ $user->profile_picture ? asset('uploads/profiles/' . $user->profile_picture) : asset('hr-app\assets\img\avatars\default-profile.png') }}"
                 alt="Profile Picture"
                 class="rounded-circle me-3 object-fit-cover"
                 style="width: 100px; height: 100px; object-fit: cover;"
