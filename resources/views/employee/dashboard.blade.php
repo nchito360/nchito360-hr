@@ -13,9 +13,34 @@
                         <div class="d-flex align-items-end row">
                             <div class="col-sm-7">
                                 <div class="card-body">
-                                    <h5 class="card-title text-primary">
-                                        Welcome back, {{ auth()->user()->first_name ?? 'John Doe' }}! 👋
-                                    </h5>
+                                @php
+    $firstName = auth()->user()->first_name ?? 'John Doe';
+@endphp
+
+<h5 class="card-title text-primary" id="greeting">
+    Welcome, {{ $firstName }}! 👋
+</h5>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const greetingElement = document.getElementById('greeting');
+        const hour = new Date().getHours();
+        let greeting;
+
+        if (hour < 12) {
+            greeting = "Good morning";
+        } else if (hour < 17) {
+            greeting = "Good afternoon";
+        } else if (hour < 21) {
+            greeting = "Good evening";
+        } else {
+            greeting = "Good evening";
+        }
+
+        greetingElement.innerHTML = `${greeting}, {{ $firstName }}! 👋`;
+    });
+</script>
+
                                     <p class="mb-4">Here's a quick summary of your HR dashboard.</p>
                                     <!-- HR Insights & Facts Card -->
                                     <div id="hr-insight-card" class="alert alert-info d-flex align-items-center fade show" role="alert" style="transition: all 0.6s cubic-bezier(.4,2,.6,1); min-height: 70px;">

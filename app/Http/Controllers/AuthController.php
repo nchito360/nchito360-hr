@@ -37,35 +37,30 @@ class AuthController extends Controller
     }
 
     public function register(Request $request)
-    {
-        $validated = $request->validate([
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed|min:6',
-        ]);
+{
+    $validated = $request->validate([
+        'first_name' => 'required|string|max:255',
+        'last_name'  => 'required|string|max:255',
+        'email'      => 'required|email|unique:users,email',
+        'password'   => 'required|confirmed|min:6',
+    ]);
 
-        $user = User::create([
-            'first_name' => $validated['first_name'] ?? 'Default First Name',
-            'last_name' => $validated['last_name'] ?? 'Default Last Name',
-            'email' => $validated['email'],
-            'password' => Hash::make($validated['password']),
-            'company' => $validated['company'] ?? 'Default Company',
-            'position' => $validated['position'] ?? 'Default Position',
-            'department' => $validated['department'] ?? 'Default Department',
-            'branch' => $validated['branch'] ?? json_encode(['Default Branch']),
-        ]);
+    $user = User::create([
+        'first_name' => $validated['first_name'],
+        'last_name'  => $validated['last_name'],
+        'email'      => $validated['email'],
+        'password'   => Hash::make($validated['password']),
+        // Optional defaults (can be moved later to company setup phase)
+        'position'   => 'Not Assigned',
+        'department' => null,
+        'branch'     => null,
+    ]);
 
-        Auth::login($user);
+    Auth::login($user);
 
-        if ($user) {
-            return view('employee.dashboard')
-            ->with('status', 'Registration successful! Please select your company mode.');
-        } else {
-            return back()->withErrors(['registration' => 'Registration failed. Please try again.']);
-        }
-        
-    }
+    return redirect()->route('employee.dashboard')->with('status', 'Registration successful! Please create or join a company.');
+}
+
 
     // public function showCompanyModeSelection()
     // {

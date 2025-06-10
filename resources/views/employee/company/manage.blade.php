@@ -171,11 +171,12 @@
                 <h5 class="mb-3">Delete Company</h5>
                 <p class="text-danger">Deleting your company will remove all associated data. This action cannot be undone.
                 </p>
-                <form action="{{ route('employee.dashboard') }}" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-danger">Delete Company</button>
-                </form>
+                <form action="{{ route('employee.company.destroy') }}" method="POST">
+    @csrf
+    @method('DELETE')
+    <button type="submit" class="btn btn-danger">Delete Company</button>
+</form>
+
             </div>
 
         </div>

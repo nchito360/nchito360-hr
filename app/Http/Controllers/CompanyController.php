@@ -49,6 +49,28 @@ public function requestToJoinCompany(Request $request)
     }
 }
 
+public function switchCompany(Request $request)
+{
+    $request->validate([
+        'switch_company_code' => 'required|exists:companies,company_code', // assuming 'code' is the unique company identifier
+    ]);
+
+    $company = Company::where('company_code', $request->switch_company_code)->first();
+
+    $user = Auth::user();
+    $user->company_id = $company->id;
+    $user->position = null;
+    $user->branch = null;
+    $user->department = null;
+    $user->privileges = 'none';
+    $user->save();
+
+    
+
+    return back()->with('success', 'Switched to new company successfully.');
+}
+
+
 
 
 public function cancelJoinRequest($id)
@@ -58,11 +80,19 @@ public function cancelJoinRequest($id)
         ->where('status', 'pending')
         ->firstOrFail();
 
+    $user = auth()->user();
+    $company = $request->company;  // get the related company
+
+    // If you want to clear user's company_id on cancel, uncomment below:
+    // $user->company_id = null; 
+    // $user->save();
+
     $request->delete();
+
+    app(EmailController::class)->sendCancelJoinNotification($user, $company);
 
     return back()->with('success', 'Join request canceled.');
 }
-
 
 public function approveJoinRequest($id)
 {
@@ -70,8 +100,12 @@ public function approveJoinRequest($id)
     $joinRequest->update(['status' => 'approved']);
 
     $user = $joinRequest->user;
-    $user->company_id = $joinRequest->company_id;
+    $company = $joinRequest->company;
+
+    $user->company_id = $company->id;
     $user->save();
+
+    app(EmailController::class)->sendApproveJoinNotification($user, $company);
 
     return back()->with('success', 'Request approved.');
 }
@@ -81,9 +115,13 @@ public function rejectJoinRequest($id)
     $joinRequest = JoinCompanyRequest::findOrFail($id);
     $joinRequest->update(['status' => 'rejected']);
 
+    $user = $joinRequest->user;
+    $company = $joinRequest->company;
+
+    app(EmailController::class)->sendRejectJoinNotification($user, $company);
+
     return back()->with('success', 'Request rejected.');
 }
-
 
 
 
@@ -122,15 +160,17 @@ public function rejectJoinRequest($id)
             'organization_name' => 'required|string',
         ]);
 
+        $user = Auth::user();
+
         // Create the company
         $company = Company::create([
             'organization_name' => $data['organization_name'],
             'branches' => [],
             'departments' => [],
+            'owner_id' => $user->id,
         ]);
 
         // Assign the company to the logged-in user
-        $user = Auth::user();
         $user->company_id = $company->id;
         $user->organization = $company->organization_name;
         $user->save();
@@ -169,14 +209,37 @@ public function rejectJoinRequest($id)
     }
 
     // ========== Companies - Delete Company ==========
-    public function deleteCompany($id)
-    {
-        $company = Company::findOrFail($id);
-        
-        // Optional: Remove all associated data such as users, branches, departments before deleting
-        $company->delete();
+    public function destroy(Request $request)
+{
+    $user = Auth::user();
 
-        return back()->with('success', 'Company deleted.');
+    // Check if the user owns a company
+    $company = Company::find($user->company_id);
+
+    if (!$company) {
+        return back()->withErrors(['error' => 'Company not found.']);
     }
+
+    // Allow only the owner to delete the company
+    if ($company->owner_id !== $user->id) {
+        return back()->withErrors(['error' => 'Only the company owner can delete the company.']);
+    }
+
+    // Delete all users associated with the company (optional)
+    User::where('company_id', $company->id)->update([
+        'company_id' => null,
+        'organization' => null,
+        'position' => null,
+        'department' => null,
+        'branch' => null,
+    ]);
+
+    // Delete the company
+    $company->delete();
+
+    // Optional: logout the user or redirect to a safe page
+    return redirect()->route('employee.dashboard')->with('success', 'Company deleted successfully.');
+}
+
 
 }

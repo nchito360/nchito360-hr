@@ -3,6 +3,14 @@
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
 
+    @if (session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+
+        @if (session('error'))
+            <div class="alert alert-danger">{{ session('error') }}</div>
+        @endif
+
         <div class="card p-4 mb-4">
             <h5 class="mb-3">Manage Applications</h5>
             <div class="d-flex flex-wrap gap-2">

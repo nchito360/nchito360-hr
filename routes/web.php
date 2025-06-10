@@ -24,6 +24,9 @@ Route::get('/test-email', function () {
     return 'Email sent!';
 });
 
+Route::get('/', function () {
+    return redirect()->route('login.form');
+});
 
 
 Route::middleware(['auth'])->group(function () {
@@ -106,10 +109,12 @@ Route::middleware(['auth'])->prefix('employee')->name('employee.')->group(functi
     Route::post('/company/join-request', [CompanyController::class, 'requestToJoinCompany'])->name('company.request.join');
     Route::post('/company/join-request/{id}/approve', [CompanyController::class, 'approveJoinRequest'])->name('company.request.approve');
     Route::post('/company/join-request/{id}/reject', [CompanyController::class, 'rejectJoinRequest'])->name('company.request.reject');
+    Route::delete('/company/delete', [CompanyController::class, 'destroy'])->name('company.destroy');
 
 
 
     // Team
+    Route::put('/team/{id}/update', [TeamController::class, 'update'])->name('team.update');
     Route::get('/team/members', [DashboardController::class, 'employeeTeamMembers'])->name('team.members');
     Route::get('/team/roles', [DashboardController::class, 'employeeTeamRoles'])->name('team.roles');
     Route::get('/team/invitations', [DashboardController::class, 'employeeTeamInvitations'])->name('team.invitations');

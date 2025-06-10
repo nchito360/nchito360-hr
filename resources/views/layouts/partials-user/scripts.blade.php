@@ -36,33 +36,48 @@
     });
 </script>
 
+
+
 <script>
-    // Show loader on all form submits
     document.addEventListener('DOMContentLoaded', function () {
         const loader = document.getElementById('global-loader');
 
-        // Show on any form submit
+        // ✅ Only show loader on forms that POST or redirect to another page
         document.querySelectorAll('form').forEach(form => {
-            form.addEventListener('submit', () => {
-                loader.style.display = 'flex';
-            });
-        });
-
-        // Show on any link with .nav-link or .ajax-load
-        document.querySelectorAll('a.nav-link, a.ajax-load').forEach(link => {
-            link.addEventListener('click', (e) => {
-                // Optional: skip if link has target _blank
-                if (link.target !== '_blank') {
+            form.addEventListener('submit', (e) => {
+                // Prevent loader for forms targeting modals or dropdowns
+                const target = e.target.getAttribute('target');
+                if (!target || target === '_self') {
                     loader.style.display = 'flex';
                 }
             });
         });
 
-        // Hide loader on page load
-        window.addEventListener('load', () => {
+        // ✅ Axios request loader (if you use Axios)
+        if (window.axios) {
+            axios.interceptors.request.use(config => {
+                loader.style.display = 'flex';
+                return config;
+            }, error => {
+                loader.style.display = 'none';
+                return Promise.reject(error);
+            });
+
+            axios.interceptors.response.use(response => {
+                loader.style.display = 'none';
+                return response;
+            }, error => {
+                loader.style.display = 'none';
+                return Promise.reject(error);
+            });
+        }
+
+        // ✅ Hide loader when navigating back
+        window.addEventListener('pageshow', () => {
             loader.style.display = 'none';
         });
     });
 </script>
+
 
 @stack('scripts')

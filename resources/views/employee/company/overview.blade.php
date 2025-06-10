@@ -16,93 +16,167 @@
 <div class="card mb-4">
     <div class="card-body">
         @if($company)
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h5 class="card-title mb-0">{{ $company->organization_name }}</h5>
-                @if($company->logo)
-                    <img src="{{ $company->logo }}" alt="Company Logo" class="img-thumbnail" style="height: 50px;">
-                @endif
-            </div>
+        <div class="container-xxl flex-grow-1 container-p-y">
+    {{-- Header with Logo --}}
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h4 class="fw-bold mb-1">{{ $company->organization_name }}</h4>
+            <p class="text-muted mb-0">{{ $company->description }}</p>
+        </div>
+        @if($company->logo)
+            <img src="{{ $company->logo }}" alt="Company Logo" class="img-thumbnail" style="height: 60px;">
+        @endif
+    </div>
 
-            <p class="text-muted mb-3">{{ $company->description }}</p>
-
-            <div class="row mb-3">
-                <div class="col-md-3">
-                    <h6>Industry</h6>
-                    <p>{{ $company->industry ?? 'N/A' }}</p>
-                </div>
-                <div class="col-md-3">
-                    <h6>Email</h6>
-                    <p>{{ $company->email ?? 'N/A' }}</p>
-                </div>
-                <div class="col-md-3">
-                    <h6>Website</h6>
-                    <p>
-                        @if($company->website)
-                            <a href="{{ $company->website }}" target="_blank">{{ $company->website }}</a>
-                        @else
-                            N/A
-                        @endif
-                    </p>
+    {{-- Quick Stats --}}
+    <div class="row g-4 mb-4">
+        <div class="col-md-4">
+            <div class="card border-start border-primary border-3 shadow-sm h-100">
+                <div class="card-body d-flex align-items-center">
+                    <i class="bx bx-buildings fs-2 text-primary me-3"></i>
+                    <div>
+                        <h6 class="mb-1">Industry</h6>
+                        <p class="mb-0">{{ $company->industry ?? 'N/A' }}</p>
+                    </div>
                 </div>
             </div>
+        </div>
 
-            <hr>
+        <div class="col-md-4">
+            <div class="card border-start border-success border-3 shadow-sm h-100">
+                <div class="card-body d-flex align-items-center">
+                    <i class="bx bx-envelope fs-2 text-success me-3"></i>
+                    <div>
+                        <h6 class="mb-1">Email</h6>
+                        <p class="mb-0">{{ $company->email ?? 'N/A' }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-            <div class="row mb-3">
-                <div class="col-md-3">
+        <div class="col-md-4">
+            <div class="card border-start border-info border-3 shadow-sm h-100">
+                <div class="card-body d-flex align-items-center">
+                    <i class="bx bx-globe fs-2 text-info me-3"></i>
+                    <div>
+                        <h6 class="mb-1">Website</h6>
+                        <p class="mb-0">
+                            @if($company->website)
+                                <a href="{{ $company->website }}" target="_blank">{{ $company->website }}</a>
+                            @else
+                                N/A
+                            @endif
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Metrics --}}
+    <div class="row g-4 mb-4">
+        <div class="col-md-3">
+            <div class="card text-center h-100 shadow-sm">
+                <div class="card-body">
+                    <i class="bx bx-layer fs-1 text-warning mb-2"></i>
                     <h6>Total Departments</h6>
-                    <p>{{ count($company->departments ?? []) }}</p>
+                    <p class="mb-0 fw-bold">{{ count($company->departments ?? []) }}</p>
                 </div>
-                <div class="col-md-3">
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-center h-100 shadow-sm">
+                <div class="card-body">
+                    <i class="bx bx-store fs-1 text-danger mb-2"></i>
                     <h6>Total Branches</h6>
-                    <p>{{ count($company->branches ?? []) }}</p>
+                    <p class="mb-0 fw-bold">{{ count($company->branches ?? []) }}</p>
                 </div>
-                <div class="col-md-3">
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-center h-100 shadow-sm">
+                <div class="card-body">
+                    <i class="bx bx-group fs-1 text-secondary mb-2"></i>
                     <h6>Team Members</h6>
-                    <p>{{ $teamMembers->count() }}</p>
+                    <p class="mb-0 fw-bold">{{ $teamMembers->count() }}</p>
                 </div>
-                <div class="col-md-3">
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-center h-100 shadow-sm">
+                <div class="card-body">
+                    <i class="bx bx-user-check fs-1 text-primary mb-2"></i>
                     <h6>Your Role</h6>
-                    <p>{{ $currentRole ?? 'N/A' }}</p>
+                    <p class="mb-0 fw-bold">{{ $currentRole ?? 'N/A' }}</p>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <div class="row mb-3">
-                <div class="col-md-3">
-                    <h6>Your Department</h6>
-                    <p>{{ $currentDepartment ?? 'N/A' }}</p>
-                </div>
-                <div class="col-md-3">
-                    <h6>Your Branch</h6>
-                    <p>{{ $currentBranch ?? 'N/A' }}</p>
+    {{-- User Info --}}
+    <div class="row g-4 mb-4">
+        <div class="col-md-6">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body d-flex align-items-center">
+                    <i class="bx bx-buildings fs-2 text-info me-3"></i>
+                    <div>
+                        <h6 class="mb-1">Your Department</h6>
+                        <p class="mb-0">{{ $currentDepartment ?? 'N/A' }}</p>
+                    </div>
                 </div>
             </div>
+        </div>
 
-            <hr>
+        <div class="col-md-6">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body d-flex align-items-center">
+                    <i class="bx bx-current-location fs-2 text-success me-3"></i>
+                    <div>
+                        <h6 class="mb-1">Your Branch</h6>
+                        <p class="mb-0">{{ $currentBranch ?? 'N/A' }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-            <div class="row">
-
-                <div class="col-md-6">
-                    <h6>All Branches</h6>
-                    <ul>
+    {{-- All Branches & Departments --}}
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h6 class="card-title mb-3"><i class="bx bx-map-pin text-warning me-2"></i>All Branches</h6>
+                    <ul class="list-unstyled">
                         @forelse($company->branches as $branch)
-                            <li>{{ $branch }}</li>
+                            <li><i class="bx bx-chevron-right text-muted me-1"></i> {{ $branch }}</li>
                         @empty
-                            <li>No branches listed.</li>
-                        @endforelse
-                    </ul>
-                </div>
-                <div class="col-md-6">
-                    <h6>All Departments</h6>
-                    <ul>
-                        @forelse($company->departments as $department)
-                            <li>{{ $department }}</li>
-                        @empty
-                            <li>No departments listed.</li>
+                            <li class="text-muted">No branches listed.</li>
                         @endforelse
                     </ul>
                 </div>
             </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h6 class="card-title mb-3"><i class="bx bx-sitemap text-primary me-2"></i>All Departments</h6>
+                    <ul class="list-unstyled">
+                        @forelse($company->departments as $department)
+                            <li><i class="bx bx-chevron-right text-muted me-1"></i> {{ $department }}</li>
+                        @empty
+                            <li class="text-muted">No departments listed.</li>
+                        @endforelse
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
             <hr>
 
@@ -118,22 +192,77 @@
                         <th>#</th>
                         <th>Name</th>
                         <th>Email</th>
-                        <th>Role</th>
+                        <th>Role / Position</th>
                         <th>Department</th>
                         <th>Branch</th>
+                        <th>Privileges</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($users as $index => $user)
-                        <tr>
+                @foreach($users as $index => $user)
+                    <tr>
+                        <form action="{{ route('employee.team.update', $user->id) }}" method="POST">
+                            @csrf
+                            @method('PUT')
                             <td>{{ $index + 1 }}</td>
                             <td>{{ $user->first_name }} {{ $user->last_name }}</td>
                             <td>{{ $user->email }}</td>
-                            <td>{{ $user->position ?? 'N/A' }}</td>
-                            <td>{{ $user->department ?? 'N/A' }}</td>
-                            <td>{{ $user->branch ?? 'N/A' }}</td>
-                        </tr>
-                    @endforeach
+
+                            @php
+                                $isOwner = $user->company && $user->company->owner_id === $user->id;
+                            @endphp
+
+                            <td>
+                                <input type="text" name="position" value="{{ $user->position }}" class="form-control form-control-sm"  {{ $isOwner ? 'disabled' : '' }}>
+                            </td>
+                            <td>
+                                <select name="department" class="form-select form-select-sm"  {{ $isOwner ? 'disabled' : '' }}>
+                                    <option value="">Select Department</option>
+                                    @if($user->company && $user->company->departments)
+                                        @foreach($user->company->departments as $dept)
+                                            <option value="{{ $dept }}" {{ $user->department == $dept ? 'selected' : '' }}>
+                                                {{ $dept }}
+                                            </option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                            </td>
+                            <td>
+                                <select name="branch" class="form-select form-select-sm"  {{ $isOwner ? 'disabled' : '' }}>
+                                    <option value="">Select Branch</option>
+                                    @if($user->company && $user->company->branches)
+                                        @foreach($user->company->branches as $branch)
+                                            <option value="{{ $branch }}" {{ $user->branch == $branch ? 'selected' : '' }}>
+                                                {{ $branch }}
+                                            </option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                            </td>
+                            <td>
+                           
+
+                            <select name="privileges" class="form-select form-select-sm" required {{ $isOwner ? 'disabled' : '' }}>
+                                <option value="">-- Select --</option>
+                                <option value="departmental" {{ $user->privileges === 'departmental' ? 'selected' : '' }}>Departmental</option>
+                                <option value="notifications" {{ $user->privileges === 'notifications' ? 'selected' : '' }}>Notifications</option>
+                                <option value="full" {{ $user->privileges === 'full' ? 'selected' : '' }}>Full Access</option>
+                                <option value="none" {{ $user->privileges === 'none' ? 'selected' : '' }}>No Access</option>
+                                @if(!$isOwner)
+                                    <option value="suspended" {{ $user->privileges === 'suspended' ? 'selected' : '' }}>Suspend Account</option>
+                                    <option value="delete" {{ $user->privileges === 'delete' ? 'selected' : '' }}>Delete from Company</option>
+                                @endif
+                            </select>
+
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-sm btn-primary">Update</button>
+                            </td>
+                        </form>
+                    </tr>
+                @endforeach
+
                 </tbody>
             </table>
         @else
@@ -141,6 +270,7 @@
         @endif
     </div>
 </div>
+
 
 
 
@@ -165,12 +295,25 @@
                     <h6 class="mb-0">Request to Join Company</h6>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('employee.company.request.join') }}" method="POST">
-                        @csrf
-                        <label for="company_code">Company Code</label>
-                        <input type="text" name="company_code" id="company_code" class="form-control" required>
-                        <button class="btn btn-primary btn-sm mt-2" type="submit">Send Request</button>
-                    </form>
+                <form action="{{ route('employee.company.request.join') }}" method="POST">
+    @csrf
+    <label for="company_code">Company Code</label>
+    <input type="text" 
+           name="company_code" 
+           id="company_code" 
+           class="form-control @error('company_code') is-invalid @enderror" 
+           value="{{ old('company_code') }}" 
+           required>
+
+    @error('company_code')
+        <div class="invalid-feedback">
+            {{ $message }}
+        </div>
+    @enderror
+
+    <button class="btn btn-primary btn-sm mt-2" type="submit">Send Request</button>
+</form>
+
 
                     @if($joinRequests->isNotEmpty())
     <div class="card mt-4">
