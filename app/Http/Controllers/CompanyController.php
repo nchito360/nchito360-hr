@@ -41,7 +41,7 @@ public function requestToJoinCompany(Request $request)
             'status' => 'pending',
         ]);
 
-         app(EmailController::class)->sendJoinCompanyNotification($user, $company);
+        app(EmailController::class)->sendJoinCompanyNotification($user, $company);
 
         return back()->with('success', 'Join request sent.');
     } else {
