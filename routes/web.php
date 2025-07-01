@@ -165,6 +165,17 @@ Route::prefix('manage')->middleware(['auth'])->group(function () {
     Route::get('/employees', [AppManagementController::class, 'manageEmployees'])->name('manage.employees');
 });
 
+Route::middleware(['auth'])->group(function () {
+    Route::resource('notifications', NotificationController::class)->only(['index', 'create', 'store']);
+    Route::get('/notifications/latest', [NotificationController::class, 'latest'])->name('notifications.latest');
+    Route::get('/notifications/{notification}/mark-as-read', [NotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
+    Route::get('/notifications/{notification}/mark-as-unread', [NotificationController::class, 'markAsUnread'])->name('notifications.markAsUnread');
+    Route::delete('/notifications/{notification}', [NotificationController::class, 'destroy'])->name('notifications.destroy');
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.all');
+Route::get('/notifications/{id}', [NotificationController::class, 'show'])->name('notifications.view');
+
+});
+
 
 
 // Logout

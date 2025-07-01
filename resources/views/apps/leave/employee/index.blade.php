@@ -88,7 +88,7 @@
                             @if ($leave->supporting_document)
                                 @php
                                     $ext = pathinfo($leave->supporting_document, PATHINFO_EXTENSION);
-                                    $url = asset('storage/' . $leave->supporting_document);
+                                    $url = asset('public/storage/' . $leave->supporting_document);
                                 @endphp
                                 <a href="{{ $url }}" target="_blank" class="btn btn-sm btn-outline-primary">
                                     {{ in_array($ext, ['jpg', 'jpeg', 'png']) ? 'View Image' : 'View PDF' }}
