@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
 {
     Schema::table('users', function (Blueprint $table) {
-        $table->string('employment_status')->default('probation')->after('email'); // adjust position if needed
+        $table->string('employment_status')->nullable()->default('probation')->after('email'); // adjust position if needed
     });
 }
 

@@ -54,7 +54,7 @@ public function register(Request $request)
         'position'   => 'Not Assigned',
         'department' => null,
         'branch'     => null,
-        'employment_status' => null, // Default status
+        'employment_status' => 'probation', // Default status
         'profile_picture' => null, // Default profile picture
     ]);
 
