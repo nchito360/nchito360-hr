@@ -28,10 +28,19 @@ class AppController extends Controller
         return view('apps.no-app');
     }
 
-    public function leave()
-    {
-        return view('apps.no-app');
+public function leave()
+{
+    $user = auth()->user();
+
+    // Check if the user is not associated with any company
+    if (is_null($user->company_id)) {
+        return view('apps.no-app'); // A view telling the user they need to join or create a company
     }
+
+    // Otherwise, show the leave dashboard
+    return app()->call('App\Http\Controllers\LeaveController@index');
+}
+
 
     public function otherApps()
     {

@@ -39,7 +39,7 @@
                         <div>Team Members</div>
                     </a>
                 </li>
-                <li class="menu-item {{ request()->is('employee/company/branches') ? 'active' : '' }}">
+                <!-- <li class="menu-item {{ request()->is('employee/company/branches') ? 'active' : '' }}">
                     <a href="/employee/company/branches" class="menu-link">
                         <div>My Branch</div>
                     </a>
@@ -48,7 +48,7 @@
                     <a href="/employee/company/departments" class="menu-link">
                         <div>Department</div>
                     </a>
-                </li>
+                </li> -->
             </ul>
         </li>
 

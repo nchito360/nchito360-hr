@@ -12,6 +12,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\WelcomeUserMail;
 use Illuminate\Auth\Events\Verified;
 
 class AuthController extends Controller
@@ -36,7 +37,7 @@ class AuthController extends Controller
         return view('auth.register');
     }
 
-    public function register(Request $request)
+public function register(Request $request)
 {
     $validated = $request->validate([
         'first_name' => 'required|string|max:255',
@@ -50,11 +51,15 @@ class AuthController extends Controller
         'last_name'  => $validated['last_name'],
         'email'      => $validated['email'],
         'password'   => Hash::make($validated['password']),
-        // Optional defaults (can be moved later to company setup phase)
         'position'   => 'Not Assigned',
         'department' => null,
         'branch'     => null,
+        'employment_status' => null, // Default status
+        'profile_picture' => null, // Default profile picture
     ]);
+
+    // Send welcome email
+    Mail::to($user->email)->send(new WelcomeUserMail($user));
 
     Auth::login($user);
 

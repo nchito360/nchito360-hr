@@ -198,9 +198,21 @@ public function leaveCompany()
     return back()->with('success', 'You have left the company.');
 }
 
-     public function employeeCompanyTeam() {
-        return view('employee.company.team');
+    public function employeeCompanyTeam()
+{
+    $user = auth()->user();
+
+    if (!$user->company_id) {
+        return redirect()->back()->with('error', 'You are not associated with any company.');
     }
+
+    $teamMembers = \App\Models\User::where('company_id', $user->company_id)
+                                   ->where('id', '!=', $user->id)
+                                   ->get();
+
+    return view('employee.company.team', compact('teamMembers'));
+}
+
 
     public function employeeCompanyBranches() {
         return view('employee.company.branches');
@@ -268,6 +280,7 @@ public function employeeUpdateProfile(Request $request)
         'department' => 'nullable|string|max:255',
         'branch' => 'nullable|string|max:255',
         'profile_picture' => 'nullable|image|max:10048',
+        'employment_status' => 'nullable|string|in:probation, contract, intern, permanent,terminated', // Example statuses
     ]);
 
     if ($request->hasFile('profile_picture')) {

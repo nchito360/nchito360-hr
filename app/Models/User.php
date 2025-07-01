@@ -30,6 +30,8 @@ class User extends Authenticatable
         'department',
         'branch',
         'profile_picture',
+        'employment_status', // Added employment status
+        'privileges', // Added privileges
     ];
 
 
@@ -53,6 +55,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'contract_start_date' => 'date',
         ];
     }
 
@@ -65,6 +68,33 @@ public function sendPasswordResetNotification($token)
 {
     $this->notify(new CustomResetPassword($token));
 }
+
+public function leaves()
+{
+    return $this->hasMany(Leave::class);
+}
+
+/**
+ * Get total used leave days (only approved leaves)
+ */
+public function getUsedLeaveDays(): int
+{
+    return $this->leaves()
+        ->where('status', 'approved')
+        ->get()
+        ->sum(function ($leave) {
+            return $leave->start_date->diffInDays($leave->end_date) + 1;
+        });
+}
+
+/**
+ * Get remaining leave days based on a fixed annual entitlement
+ */
+public function getRemainingLeaveDays(int $entitlement = 30): int
+{
+    return max(0, $entitlement - $this->getUsedLeaveDays());
+}
+
    
 
 }

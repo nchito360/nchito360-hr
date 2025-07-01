@@ -20,6 +20,8 @@ class TeamController extends Controller
         'privileges' => 'required|in:departmental,notifications,full,none,suspended,delete',
         'department' => 'nullable|string|max:255',
         'branch' => 'nullable|string|max:255',
+        'employment_status' => 'nullable|string|in:probation,contract,intern,permanent,terminated',
+        'contract_start_date' => 'nullable|date',
     ]);
 
     $user = User::findOrFail($id);
@@ -39,6 +41,9 @@ class TeamController extends Controller
     $user->department = $request->department;
     $user->branch = $request->branch;
     $user->privileges = $request->privileges;
+    $user->employment_status = $request->employment_status;
+    $user->contract_start_date = $request->contract_start_date;
+
 
     if ($request->privileges === 'suspended') {
         $user->status = 'suspended';

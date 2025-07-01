@@ -28,7 +28,6 @@
               @endif
 
               <hr style="border: none; border-top: 1px solid #dee2e6; margin: 30px 0;" />
-              <p style="font-size: 14px; color: #6c757d; margin-bottom: 5px;">Regards,</p>
               <p style="font-size: 14px; color: #6c757d;">
                 <strong>Nchito360° Team</strong><br />
                 🌐 <a href="https://nchito360.site" style="color: #0d6efd; text-decoration: none;">nchito360.site</a><br />
