@@ -1,106 +1,78 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Leave Application Notification</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #f4f6f8;
-            color: #333;
-            margin: 0;
-            padding: 0;
-        }
-        .email-container {
-            max-width: 600px;
-            margin: 40px auto;
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
-        }
-        h2 {
-            color: #0056b3;
-        }
-        p {
-            line-height: 1.6;
-        }
-        .info-table {
-            width: 100%;
-            margin-top: 20px;
-            border-collapse: collapse;
-        }
-        .info-table th,
-        .info-table td {
-            padding: 10px;
-            text-align: left;
-        }
-        .info-table th {
-            background-color: #f0f4f8;
-            color: #0056b3;
-        }
-        .footer {
-            margin-top: 30px;
-            font-size: 13px;
-            color: #888;
-            text-align: center;
-        }
-        .btn {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 12px 20px;
-            background-color: #0056b3;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 4px;
-        }
-        .btn:hover {
-            background-color: #003e80;
-        }
-    </style>
-</head>
-<body>
-    <div class="email-container">
-        <h2>New Leave Application Submitted</h2>
-        <p>Hello,</p>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Leave Application Notification – Nchito360°</title>
+  </head>
+  <body style="margin: 0; padding: 0; background-color: #f8f9fa; font-family: Arial, sans-serif;">
+    <table width="100%" cellpadding="0" cellspacing="0" style="padding: 40px 0;">
+      <tr>
+        <td align="center">
+          <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); overflow: hidden;">
+            <tr>
+              <td style="padding: 30px; text-align: center;">
+                <!-- Logo -->
+                <img src="https://nchito360.site/assets/img/logos/nchito360-logo.png" alt="Nchito360° Logo" width="130" style="margin-bottom: 20px;" />
 
-        <p>
-            <strong>{{ $leave->user->first_name }} {{ $leave->user->last_name }}</strong> has submitted a leave request. Below are the details:
-        </p>
+                <!-- Heading -->
+                <h2 style="color: #212529; margin-bottom: 10px;">New Leave Application Submitted</h2>
 
-        <table class="info-table">
-            <tr>
-                <th>Employee Name</th>
-                <td>{{ $leave->user->first_name }} {{ $leave->user->last_name }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ $leave->user->email }}</td>
-            </tr>
-            <tr>
-                <th>Leave Type</th>
-                <td>{{ ucfirst($leave->type) }}</td>
-            </tr>
-            <tr>
-                <th>Start Date</th>
-                <td>{{ \Carbon\Carbon::parse($leave->start_date)->format('F j, Y') }}</td>
-            </tr>
-            <tr>
-                <th>End Date</th>
-                <td>{{ \Carbon\Carbon::parse($leave->end_date)->format('F j, Y') }}</td>
-            </tr>
-            <tr>
-                <th>Reason</th>
-                <td>{{ $leave->reason }}</td>
-            </tr>
-        </table>
+            
 
-        <a href="{{ route('leave.manage') }}" class="btn">Go to Dashboard</a>
+                <!-- Leave Info Table -->
+                <table width="100%" cellpadding="0" cellspacing="0" style="margin: 20px 0; border-collapse: collapse;">
+                  <tr>
+                    <td style="text-align: left; font-size: 15px; color: #343a40;">
+                      <table width="100%" cellpadding="6" cellspacing="0" style="border-collapse: collapse;">
+                        <tr>
+                          <td style="font-weight: bold; width: 160px;">Employee Name:</td>
+                          <td>{{ $leave->user->first_name }} {{ $leave->user->last_name }}</td>
+                        </tr>
+                        <tr>
+                          <td style="font-weight: bold;">Email:</td>
+                          <td>{{ $leave->user->email }}</td>
+                        </tr>
+                        <tr>
+                          <td style="font-weight: bold;">Leave Type:</td>
+                          <td>{{ ucfirst($leave->type) }}</td>
+                        </tr>
+                        <tr>
+                          <td style="font-weight: bold;">Start Date:</td>
+                          <td>{{ \Carbon\Carbon::parse($leave->start_date)->format('F j, Y') }}</td>
+                        </tr>
+                        <tr>
+                          <td style="font-weight: bold;">End Date:</td>
+                          <td>{{ \Carbon\Carbon::parse($leave->end_date)->format('F j, Y') }}</td>
+                        </tr>
+                        <tr>
+                          <td style="font-weight: bold;">Reason:</td>
+                          <td>{{ $leave->reason ?? 'N/A' }}</td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
 
-        <div class="footer">
-            &copy; {{ now()->year }} Human Resource Management System. All rights reserved.<br>
-            This email was sent to you because you are an administrator of the HR System.
-        </div>
-    </div>
-</body>
+                <!-- CTA -->
+                <!-- <p style="margin: 30px 0;">
+                  <a href="{{ route('leave.manage') }}" target="_blank" style="background-color: #0d6efd; color: #fff; text-decoration: none; padding: 12px 24px; border-radius: 6px; font-size: 16px;">
+                    👉 Manage Leave Requests
+                  </a>
+                </p> -->
+
+                <!-- Signature -->
+                <hr style="border: none; border-top: 1px solid #dee2e6; margin: 30px 0;" />
+                <p style="font-size: 14px; color: #6c757d;">
+                  <strong>Nchito360° Team</strong><br />
+                  HR Management Made Easy<br />
+                  🌐 <a href="https://nchito360.site" style="color: #0d6efd; text-decoration: none;">nchito360.site</a><br />
+                  📧 <a href="mailto:support@nchito360.site" style="color: #0d6efd; text-decoration: none;">support@nchito360.site</a>
+                </p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
 </html>

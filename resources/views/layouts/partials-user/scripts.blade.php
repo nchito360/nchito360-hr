@@ -17,6 +17,15 @@
 <!-- Page JS -->
 <script src="{{ asset('hr-app/assets/js/dashboards-analytics.js') }}"></script>
 
+<!-- DataTables CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" />
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
 
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -35,6 +44,8 @@
         });
     });
 </script>
+
+
 
 
 
@@ -78,6 +89,40 @@
         });
     });
 </script>
+
+<script>
+$(document).ready(function() {
+    // Custom order for status column:
+    $.fn.dataTable.ext.order['dom-text-status'] = function(settings, col) {
+        return this.api().column(col, {order:'index'}).nodes().map(function(td, i) {
+            // Map status text to a numeric value for sorting
+            var statusText = $(td).text().toLowerCase().trim();
+            switch(statusText) {
+                case 'pending': return 1;
+                case 'approved': return 2;
+                case 'rejected': return 3;
+                default: return 4;
+            }
+        });
+    };
+
+    $('.table').DataTable({
+        "paging": true,
+        "ordering": true,
+        "info": true,
+        "searching": true,
+        // Use custom ordering for the Status column (index 7)
+        "columnDefs": [
+            {
+                "targets": 7,
+                "orderDataType": "dom-text-status"
+            }
+        ],
+        "order": [[7, "asc"]] // default sort by status ascending (pending first)
+    });
+});
+</script>
+
 
 
 @stack('scripts')

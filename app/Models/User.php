@@ -32,6 +32,8 @@ class User extends Authenticatable
         'profile_picture',
         'employment_status', // Added employment status
         'privileges', // Added privileges
+        'used_leave_days', // Added used leave days
+        'contract_start_date', // Added contract start date
     ];
 
 

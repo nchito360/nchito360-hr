@@ -17,20 +17,7 @@ use App\Models\User;
 
 class EmailController extends Controller
 {
-// public function sendLeaveApplied($leave)
-// {
-//     // Get users in the same company with full privileges, excluding the one who applied
-//     $recipients = User::where('company_id', $leave->company_id)
-//                       ->where('privileges', 'full')
-//                       ->where('id', '!=', $leave->user_id)
-//                       ->get();
 
-//     foreach ($recipients as $recipient) {
-//         Mail::to($recipient->email)->send(new LeaveAppliedMail($leave));
-//     }
-
-//     return response()->json(['message' => 'Leave application email sent to full-privilege users.']);
-// }
 
 public function sendLeaveApplied($leave)
 {
@@ -42,6 +29,8 @@ public function sendLeaveApplied($leave)
     foreach ($admins as $admin) {
         Mail::to($admin->email)->send(new LeaveAppliedMail($leave));
     }
+    
+    Mail::to($leave->user->email)->send(new LeaveAppliedMail($leave));
 }
 
 public function store(Request $request)
@@ -115,16 +104,6 @@ public function sendJoinRequest($joinRequest)
     return response()->json(['message' => 'Join request email sent to all full-privilege admins.']);
 }
 
-
-
-   // public static function sendJoinCompanyNotification(User $user, Company $company)
-//{
-    // $admins = $company->users()->where('role', 'admin')->get();
-
-    // foreach ($admins as $admin) {
-        //Mail::to('katongobupe444@gmail.com')->send(new CompanyJoinRequestMail($user, $company));
-    // }
-//}
 
 
 public function notifyAdmins($company, $subject, $message, $buttonText = null, $buttonUrl = null)

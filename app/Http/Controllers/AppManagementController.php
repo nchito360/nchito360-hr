@@ -12,11 +12,9 @@ class AppManagementController extends Controller
  
 public function manageLeave()
 {
-    $pendingLeaves = Leave::where('status', 'pending')
-        ->with('user') // Make sure `user()` relationship exists on LeaveApplication model
-        ->get();
+    $allLeaves = Leave::with('user')->get();
 
-    return view('apps.manage.leave.index', compact('pendingLeaves'));
+    return view('apps.manage.leave.index', compact('allLeaves'));
 }
 
 

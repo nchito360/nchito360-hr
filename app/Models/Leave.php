@@ -19,6 +19,7 @@ class Leave extends Model
         'status',
         'manager_comment',
         'approved_by',
+        'supporting_document', // New field for supporting document
     ];
 
     /**
